@@ -399,6 +399,9 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             if #available(iOS 13.0, *), onDevice {
                 currentRequest.requiresOnDeviceRecognition = true
             }
+            if #available(iOS 16.0, *), autoPunctuation {
+                currentRequest.addsPunctuation = true
+            }
             switch listenMode {
             case ListenMode.dictation:
                 currentRequest.taskHint = SFSpeechRecognitionTaskHint.dictation

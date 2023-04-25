@@ -404,7 +404,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             if #available(iOS 13.0, *), onDevice {
                 currentRequest.requiresOnDeviceRecognition = true
             }
-            if #available(iOS 16.0, *), autoPunctuation {
+            if #available(iOS 16.0, *) {
                 currentRequest.addsPunctuation = true
             }
             switch listenMode {

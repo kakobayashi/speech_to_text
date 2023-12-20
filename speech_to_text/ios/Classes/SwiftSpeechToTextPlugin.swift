@@ -593,7 +593,7 @@ extension SwiftSpeechToTextPlugin : SFSpeechRecognitionTaskDelegate {
                 default:                    
                     errorMsg = "error_unknown (\(err.code))"
                 }
-                let speechError = SpeechRecognitionError(errorMsg: errorMsg, permanent: true )
+                let speechError = SpeechRecognitionError(errorMsg: errorMsg, permanent: true, detail: nil )
                 do {
                     let errorResult = try jsonEncoder.encode(speechError)
                     invokeFlutter( SwiftSpeechToTextCallbackMethods.notifyError, arguments: String(data:errorResult, encoding: .utf8) )

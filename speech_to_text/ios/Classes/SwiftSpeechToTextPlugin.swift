@@ -351,7 +351,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             return
         }
         do {
-           let inErrorTest = true
+//            let inErrorTest = true
             failedListen = false
             returnPartialResults = partialResults
             setupRecognizerForLocale(locale: getLocale(localeStr))
@@ -428,10 +428,10 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
                     self.updateSoundLevel( buffer: buffer )
                 }
             }
-            if ( inErrorTest ){
-                audioSession = AVAudioSession.sharedInstance()
-                throw SpeechToTextError.runtimeError("for testing only")
-            }
+//             if ( inErrorTest ){
+//                 audioSession = AVAudioSession.sharedInstance()
+//                 throw SpeechToTextError.runtimeError("for testing only")
+//             }
             self.audioEngine.prepare()
             try self.audioEngine.start()
             if nil == listeningSound {

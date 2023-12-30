@@ -351,7 +351,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             return
         }
         do {
-        //    let inErrorTest = true
+           let inErrorTest = true
             failedListen = false
             returnPartialResults = partialResults
             setupRecognizerForLocale(locale: getLocale(localeStr))

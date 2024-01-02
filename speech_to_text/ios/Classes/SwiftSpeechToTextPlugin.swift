@@ -84,7 +84,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
     private var onDeviceStatus: Bool = false
     private var listening = false
     private var stopping = false
-    private let audioSession = AVAudioSession.sharedInstance()
+    private var audioSession = AVAudioSession.sharedInstance()
     private let audioEngine = AVAudioEngine()
     private var inputNode: AVAudioInputNode?
     private let jsonEncoder = JSONEncoder()

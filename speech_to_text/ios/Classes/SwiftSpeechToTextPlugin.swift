@@ -57,6 +57,7 @@ struct SpeechRecognitionResult : Codable {
 struct SpeechRecognitionError : Codable {
     let errorMsg: String
     let permanent: Bool
+    let detail: String?
 }
 
 enum SpeechToTextError: Error {
@@ -354,7 +355,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             return
         }
         do {
-        //    let inErrorTest = true
+//            let inErrorTest = true
             failedListen = false
             stopping = false
             returnPartialResults = partialResults
@@ -393,6 +394,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             }
             self.audioEngine.reset();
             if(inputNode?.inputFormat(forBus: 0).channelCount == 0){
+                audioSession = AVAudioSession.sharedInstance()
                 throw SpeechToTextError.runtimeError("Not enough available inputs.")
             }
             self.currentRequest = SFSpeechAudioBufferRecognitionRequest()
@@ -431,9 +433,10 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
                     self.updateSoundLevel( buffer: buffer )
                 }
             }
-        //    if ( inErrorTest ){
-        //        throw SpeechToTextError.runtimeError("for testing only")
-        //    }
+//             if ( inErrorTest ){
+//                 audioSession = AVAudioSession.sharedInstance()
+//                 throw SpeechToTextError.runtimeError("for testing only")
+//             }
             self.audioEngine.prepare()
             try self.audioEngine.start()
             if nil == listeningSound {
@@ -449,7 +452,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             stopCurrentListen()
             sendBoolResult( false, result );
             // ensure the not listening signal is sent in the error case
-            let speechError = SpeechRecognitionError(errorMsg: "error_listen_failed", permanent: true )
+            let speechError = SpeechRecognitionError(errorMsg: "error_listen_failed", permanent: true, detail: String(describing: error) )
             do {
                 let errorResult = try jsonEncoder.encode(speechError)
                 invokeFlutter( SwiftSpeechToTextCallbackMethods.notifyError, arguments: String( data:errorResult, encoding: .utf8) )
@@ -597,7 +600,7 @@ extension SwiftSpeechToTextPlugin : SFSpeechRecognitionTaskDelegate {
                 default:                    
                     errorMsg = "error_unknown (\(err.code))"
                 }
-                let speechError = SpeechRecognitionError(errorMsg: errorMsg, permanent: true )
+                let speechError = SpeechRecognitionError(errorMsg: errorMsg, permanent: true, detail: nil )
                 do {
                     let errorResult = try jsonEncoder.encode(speechError)
                     invokeFlutter( SwiftSpeechToTextCallbackMethods.notifyError, arguments: String(data:errorResult, encoding: .utf8) )

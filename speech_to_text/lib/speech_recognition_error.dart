@@ -20,7 +20,9 @@ class SpeechRecognitionError {
   /// the error is resolved.
   final bool permanent;
 
-  SpeechRecognitionError(this.errorMsg, this.permanent);
+  final String? detail;
+
+  SpeechRecognitionError(this.errorMsg, this.permanent, [this.detail]);
 
   factory SpeechRecognitionError.fromJson(Map<String, dynamic> json) =>
       _$SpeechRecognitionErrorFromJson(json);
@@ -28,7 +30,7 @@ class SpeechRecognitionError {
 
   @override
   String toString() {
-    return 'SpeechRecognitionError msg: $errorMsg, permanent: $permanent';
+    return 'SpeechRecognitionError msg: $errorMsg, permanent: $permanent, detail: $detail';
   }
 
   @override

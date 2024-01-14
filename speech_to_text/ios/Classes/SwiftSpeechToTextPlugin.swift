@@ -84,7 +84,7 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
     private var onDeviceStatus: Bool = false
     private var listening = false
     private var stopping = false
-    private var audioSession = AVAudioSession.sharedInstance()
+    private let audioSession = AVAudioSession.sharedInstance()
     private let audioEngine = AVAudioEngine()
     private var inputNode: AVAudioInputNode?
     private let jsonEncoder = JSONEncoder()
@@ -393,10 +393,6 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
                 sound.play()
             }
             self.audioEngine.reset();
-            if(inputNode?.inputFormat(forBus: 0).channelCount == 0){
-                audioSession = AVAudioSession.sharedInstance()
-                throw SpeechToTextError.runtimeError("Not enough available inputs.")
-            }
             self.currentRequest = SFSpeechAudioBufferRecognitionRequest()
             guard let currentRequest = self.currentRequest else {
                 sendBoolResult( false, result );

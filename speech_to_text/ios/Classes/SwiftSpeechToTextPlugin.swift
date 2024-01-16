@@ -448,7 +448,8 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             stopCurrentListen()
             sendBoolResult( false, result );
             // ensure the not listening signal is sent in the error case
-            let speechError = SpeechRecognitionError(errorMsg: "error_listen_failed", permanent: true, detail: String(describing: error) )
+            let detail = String(describing: error) + " " + String(describing: sampleRate) + " " + String(describing: audioSession.sampleRate)
+            let speechError = SpeechRecognitionError(errorMsg: "error_listen_failed", permanent: true, detail: detail )
             do {
                 let errorResult = try jsonEncoder.encode(speechError)
                 invokeFlutter( SwiftSpeechToTextCallbackMethods.notifyError, arguments: String( data:errorResult, encoding: .utf8) )

@@ -12,6 +12,7 @@ public enum SwiftSpeechToTextMethods: String {
     case cancel
     case locales
     case unknown // just for testing
+    case getSampleRate
 }
 
 public enum SwiftSpeechToTextCallbackMethods: String {
@@ -141,12 +142,18 @@ public class SwiftSpeechToTextPlugin: NSObject, FlutterPlugin {
             cancelSpeech( result )
         case SwiftSpeechToTextMethods.locales.rawValue:
             locales( result )
+        case SwiftSpeechToTextMethods.getSampleRate.rawValue:
+            getSampleRate( result )
         default:
             os_log("Unrecognized method: %{PUBLIC}@", log: pluginLog, type: .error, call.method)
             DispatchQueue.main.async {
                 result( FlutterMethodNotImplemented)
             }
         }
+    }
+    
+    private func getSampleRate( _ result: @escaping FlutterResult) {
+        result(String(describing: audioSession.sampleRate))
     }
     
     private func hasPermission( _ result: @escaping FlutterResult) {

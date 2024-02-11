@@ -152,4 +152,8 @@ abstract class SpeechToTextPlatform extends PlatformInterface {
   Future<List<dynamic>> locales() {
     throw UnimplementedError('locales() has not been implemented.');
   }
+
+  Future<String> getSampleRate() {
+    throw UnimplementedError('getSampleRate() has not been implemented.');
+  }
 }

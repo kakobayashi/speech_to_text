@@ -591,6 +591,10 @@ class SpeechToText {
     return filteredLocales;
   }
 
+  Future<String> getSampleRate() async {
+    return await SpeechToTextPlatform.instance.getSampleRate();
+  }
+
   /// Returns the locale that will be used if no localeId is passed
   /// to the [listen] method.
   Future<LocaleName?> systemLocale() async {

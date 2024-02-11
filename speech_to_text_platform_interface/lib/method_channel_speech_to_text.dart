@@ -122,6 +122,11 @@ class MethodChannelSpeechToText extends SpeechToTextPlatform {
     return await _channel.invokeMethod<List<dynamic>>('locales') ?? [];
   }
 
+  @override
+  Future<String> getSampleRate() async {
+    return await _channel.invokeMethod<List<dynamic>>('getSampleRate') ?? [];
+  }
+
   Future _handleCallbacks(MethodCall call) async {
     // print("SpeechToText call: ${call.method} ${call.arguments}");
     switch (call.method) {

@@ -124,7 +124,7 @@ class MethodChannelSpeechToText extends SpeechToTextPlatform {
 
   @override
   Future<String> getSampleRate() async {
-    return await _channel.invokeMethod<String>('getSampleRate') ?? [];
+    return await _channel.invokeMethod<String>('getSampleRate') ?? '';
   }
 
   Future _handleCallbacks(MethodCall call) async {

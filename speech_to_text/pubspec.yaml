@@ -10,11 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  speech_to_text_platform_interface:
-    git:
-      url: https://github.com/kakobayashi/speech_to_text.git
-      path: speech_to_text_platform_interface
-      ref: v6.4.1/autoPunctuation_v5
+  speech_to_text_platform_interface: ^2.1.0
   speech_to_text_macos: ^1.0.2
   json_annotation: ^4.0.0
   clock: ^1.0.1

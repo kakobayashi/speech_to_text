@@ -472,9 +472,19 @@ public class SpeechToTextPlugin: NSObject, FlutterPlugin {
       #if os(iOS)
         rememberedAudioCategory = self.audioSession.category
         rememberedAudioCategoryOptions = self.audioSession.categoryOptions
+        var categoryOptions: AVAudioSession.CategoryOptions = [
+          .defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers,
+        ]
+        if #available(iOS 26.0, *) {
+          // Use the Bluetooth high quality recording link instead of HFP when the route
+          // supports it (AirPods 4 / AirPods Pro 2 or later), falling back to HFP otherwise.
+          // The raw value of AVAudioSession.CategoryOptions.bluetoothHighQualityRecording is
+          // used so this compiles with pre-iOS 26 SDKs (Xcode < 26).
+          categoryOptions.insert(AVAudioSession.CategoryOptions(rawValue: 1 << 19))
+        }
         try self.audioSession.setCategory(
           AVAudioSession.Category.playAndRecord,
-          options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+          options: categoryOptions)
         //            try self.audioSession.setMode(AVAudioSession.Mode.measurement)
         if sampleRate > 0 {
           try self.audioSession.setPreferredSampleRate(Double(sampleRate))
